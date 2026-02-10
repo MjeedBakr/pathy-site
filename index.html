@@ -152,6 +152,52 @@
        }
 
 
+       .members-grid {
+           display: grid;
+           grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+           gap: 15px;
+           margin-top: 20px;
+       }
+
+       .member-card {
+           background: rgba(57, 124, 237, 0.15);
+           border: 1px solid rgba(57, 124, 237, 0.4);
+           border-radius: 12px;
+           padding: 20px 15px;
+           text-align: center;
+           transition: transform 0.3s, border-color 0.3s;
+       }
+
+       .member-card:hover {
+           transform: translateY(-5px);
+           border-color: #69D8A6;
+       }
+
+       .member-avatar {
+           width: 50px;
+           height: 50px;
+           background: linear-gradient(45deg, #397CED, #69D8A6);
+           border-radius: 50%;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           margin: 0 auto 12px;
+           font-size: 22px;
+           font-weight: bold;
+       }
+
+       .member-name {
+           font-size: 15px;
+           color: #ffffff;
+           font-weight: 500;
+       }
+
+       .members-count {
+           color: #d1fce9;
+           font-size: 14px;
+           margin-top: 10px;
+       }
+
        footer {
            text-align: center;
            margin-top: 50px;
@@ -238,11 +284,56 @@
        </section>
 
 
+       <section class="section">
+           <h2>👥 المشاركين</h2>
+           <p>كل شخص سوّا Fork وأضاف اسمه يظهر هنا! سوّ Fork وأضف اسمك في ملف <code style="background: rgba(57,124,237,0.3); padding: 2px 8px; border-radius: 4px;">members.js</code></p>
+           <div class="members-grid" id="members-grid">
+               <!-- الأسماء تتحمّل هنا تلقائياً من members.js -->
+           </div>
+           <p class="members-count" id="members-count"></p>
+       </section>
+
+
        <footer>
            <p>© 2026 Pathy - مبادرة تعليمية</p>
            <p style="margin-top: 10px; font-size: 14px;">نؤمن بقوة التعلم التعاوني</p>
        </footer>
    </div>
+
+   <script src="members.js"></script>
+   <script>
+       function getInitial(name) {
+           return name.trim().charAt(0);
+       }
+
+       function renderMembers() {
+           const grid = document.getElementById('members-grid');
+           const countEl = document.getElementById('members-count');
+
+           grid.innerHTML = '';
+
+           members.forEach(function(name) {
+               const card = document.createElement('div');
+               card.className = 'member-card';
+
+               const avatar = document.createElement('div');
+               avatar.className = 'member-avatar';
+               avatar.textContent = getInitial(name);
+
+               const nameEl = document.createElement('div');
+               nameEl.className = 'member-name';
+               nameEl.textContent = name;
+
+               card.appendChild(avatar);
+               card.appendChild(nameEl);
+               grid.appendChild(card);
+           });
+
+           countEl.textContent = 'عدد المشاركين: ' + members.length;
+       }
+
+       renderMembers();
+   </script>
 </body>
 </html>
 
